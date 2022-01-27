@@ -13,6 +13,10 @@ if ! dpkg -s fontconfig >/dev/null;then
 	sudo apt install -qq fontconfig
 fi
 
+if ! dpkg -s curl >/dev/null;then
+	sudo apt install -qq curl
+fi
+
 # Install zsh stuff
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 chsh -s "$(which zsh)"
