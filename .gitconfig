@@ -1,0 +1,19 @@
+[user]
+	email = ola.christoffer.vage@scoutdi.com
+	name = Ola Chr. Vaage
+	username = ovaag
+[alias]
+	ch = checkout
+	cm = commit -m
+	st = status
+	rb = rebase -i
+	sw = switch
+[core]
+	editor = micro
+[pull]
+	rebase = true
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
