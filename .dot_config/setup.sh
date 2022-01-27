@@ -3,7 +3,7 @@
 set -e
 
 # Install apt stuff
-sudo apt update && sudo apt install zsh fontconfig curl
+sudo apt update && sudo apt install zsh fontconfig
 
 # Install zsh stuff
 sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)" --unattended
