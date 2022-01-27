@@ -1,0 +1,11 @@
+export EDITOR=micro
+EDITOR=micro
+VISUAL=micro
+UnrealDir="$HOME"/Code/code/UnrealEngine
+export LC_NUMERIC="en_US.UTF-8"
+
+export GLIBC_TUNABLES=glibc.rtld.dynamic_sort=2
+
+dtf () {
+  git --git-dir="$HOME/.dotfiles" --work-tree="$HOME" "$@"
+}

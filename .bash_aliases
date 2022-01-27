@@ -1,0 +1,11 @@
+alias s='source /home/ola/.bashrc'
+alias z='source /home/ola/.zshrc'
+alias cb='catkin build'
+alias rb="git rebase -i origin/master"
+alias ros="roscd && cd ../src"
+alias sim="roslaunch scout_simulation full.launch"
+alias sm="source /home/ola/workspace/catkin/main/devel/setup.bash"
+alias sa="source /home/ola/workspace/catkin/autonomy/devel/setup.bash"
+alias unreal="/home/ola/workspace/UnrealEngine/Engine/Binaries/Linux/UE4Editor"
+alias work="cd ~/workspace"
+alias dbash="docker exec -it scout-dev bash"
