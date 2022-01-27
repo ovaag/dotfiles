@@ -3,10 +3,15 @@
 set -e
 
 # Install apt stuff
-sudo apt update && sudo apt install zsh
+sudo apt update
 
-# Install fonts
-fc-cache -f -v
+if ! dpkg -s zsh >/dev/null;then
+	sudo apt install -qq zsh
+fi
+
+if ! dpkg -s fontconfig >/dev/null;then
+	sudo apt install -qq fontconfig
+fi
 
 # Install zsh stuff
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
@@ -22,3 +27,6 @@ alias dots="git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
 dots checkout --force
 dots config --local status.showUntrackedFiles no
 dots fetch
+
+# Install fonts
+fc-cache -f -v
