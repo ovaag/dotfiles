@@ -116,5 +116,5 @@ if ! shopt -oq posix; then
   fi
 fi
 
-export EDITOR=micro
 source /home/ola/.scout-bashrc
+source $HOME/.ola-bashrc
