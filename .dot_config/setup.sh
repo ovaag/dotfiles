@@ -24,6 +24,6 @@ dots checkout --force
 dots config --local status.showUntrackedFiles no
 dots fetch
 
-
 # Install fonts
 fc-cache -f -v
+
