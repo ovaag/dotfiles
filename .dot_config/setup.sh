@@ -19,6 +19,7 @@ git clone --bare git@github.com:ovaag/dotfiles.git $HOME/.dotfiles
 dots () {
   git --git-dir="$HOME/.dotfiles" --work-tree="$HOME" "$@"
 }
+
 dots checkout --force
 dots config --local status.showUntrackedFiles no
 dots fetch
