@@ -6,7 +6,7 @@ set -e
 sudo apt update && sudo apt install zsh fontconfig curl
 
 # Install zsh stuff
-sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)" --unattended
 chsh -s "$(which zsh)"
 ZSH_CUSTOM=~/.oh-my-zsh/custom
 git clone -q https://github.com/zsh-users/zsh-autosuggestions "$ZSH_CUSTOM/plugins/zsh-autosuggestions"
