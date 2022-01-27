@@ -15,7 +15,11 @@ git clone -q --depth=1 https://github.com/romkatv/powerlevel10k.git "$ZSH_CUSTOM
 
 # Clone dotfile repo
 git clone --bare git@github.com:ovaag/dotfiles.git $HOME/.dotfiles
-alias dots="git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
+
+dots(){
+  git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME checkout --force "$@"
+}
+
 dots checkout --force
 dots config --local status.showUntrackedFiles no
 dots fetch
