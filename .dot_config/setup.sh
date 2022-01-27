@@ -3,19 +3,7 @@
 set -e
 
 # Install apt stuff
-sudo apt update
-
-if ! dpkg -s zsh >/dev/null;then
-	sudo apt install -qq zsh
-fi
-
-if ! dpkg -s fontconfig >/dev/null;then
-	sudo apt install -qq fontconfig
-fi
-
-if ! dpkg -s curl >/dev/null;then
-	sudo apt install -qq curl
-fi
+sudo apt update && sudo apt install zsh fontconfig curl
 
 # Install zsh stuff
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
