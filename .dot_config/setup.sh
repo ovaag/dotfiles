@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -e
-
 # Install apt stuff
 sudo apt update && sudo apt install zsh fontconfig curl
 
