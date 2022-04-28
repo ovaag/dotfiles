@@ -9,3 +9,13 @@ export GLIBC_TUNABLES=glibc.rtld.dynamic_sort=2
 dtf () {
   git --git-dir="$HOME/.dotfiles" --work-tree="$HOME" "$@"
 }
+
+export PATH="/usr/lib/ccache:$PATH"
+export ROSCONSOLE_FORMAT='[${severity}] [${node}] [${time}]: ${message}'
+export UNREAL_BUILD_EXCECUTABLE='$HOME/workspace/unreal_linux_build/ScoutAirSim.sh'
+export PATH="$HOME/.local/bin:$PATH"
+source $HOME/workspace/simulation_3d_resources/setup.zsh
+alias gita="python3 -m gita"
+source /opt/ros/melodic/setup.zsh
+source $HOME/workspace/catkin/compslam/devel/setup.zsh
+source $HOME/workspace/PX4-Autopilot/setup.zsh
