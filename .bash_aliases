@@ -1,5 +1,36 @@
 #! /usr/bin/env bash
 
+checklist() {
+    cat <<EOF
+
+* [x] If relevant: Power cycle the drone at least once when testing (instead of just restarting services)
+* Does this make changes to the camera manager?
+  * [ ] Yes, and I have power cycled the drone 3 times and seen no startup issues/startup artifacts/similar
+  * [ ] No significant changes
+* [x] Cross-compilation succeeds on the default SDK
+* Update node descriptions (comment at the top of each node's source file):
+  * [ ] Done
+  * [x] Not needed
+* Update package descriptions (\`<description>\` tag in package.xml):
+  * [ ] Done
+  * [x] Not needed
+* Update the [software release test](https://github.com/scoutdi/software-release-test/blob/master/.github/ISSUE_TEMPLATE):
+  * [ ] Done
+  * [x] Not needed
+* Add to the [changelog](https://github.com/orgs/scoutdi/projects/186/views/1) if [needed](https://github.com/orgs/scoutdi/projects/186/views/1?pane=info)
+  * [ ] Done
+    * [ ] If the change is significant: Notify [#operations](https://scoutdi.slack.com/archives/C05S5V1QSHW) about the update
+  * [x] Not needed
+* Request a [user manual](https://github.com/scoutdi/user-manual) update by opening an issue
+  * [ ] Done
+  * [x] Not needed
+* Does this change topic names or message definitions in a non-backwards compatible way?
+  * [ ] Yes, and I've incremented the rosbag version [in this file](https://github.com/scoutdi/scout_ros/blob/master/scout_streamer/scripts/scout_version_logger.py) and added topic renames [here](https://github.com/scoutdi/scout_ros/blob/master/scout_replay/src/scout_replay/migrations.py)
+  * [x] No
+
+EOF
+}
+
 build (){
 	if catkin build "$@"
 	then
@@ -51,20 +82,48 @@ metrical() {
     "$@";
     }
 
+# gocker() {
+	# tmp_docker=$(sudo find /tmp -type d  -name '.docker*')
+	# docker run --rm -it --name gui-docker --network host --gpus all \
+	# --privileged -e SSH_AUTH_SOCK -v /run/user/1000/keyring/ssh:/run/user/1000/keyring/ssh \
+	# -e DISPLAY -e TERM -e QT_X11_NO_MITSHM=1 -e XAUTHORITY="$tmp_docker" \
+	# -v "$tmp_docker":"$tmp_docker" -v /tmp/.X11-unix:/tmp/.X11-unix \
+	# -v /etc/localtime:/etc/localtime:ro \
+	# "$@"
+# }
+
+# Run a container with gui access on a nvidia gpu computer
 gocker() {
-	tmp_docker=$(sudo find /tmp -type d  -name '.docker*')
-	docker run --rm -it --name gui-docker --network host --gpus all \
-	--privileged -e SSH_AUTH_SOCK -v /run/user/1000/keyring/ssh:/run/user/1000/keyring/ssh \
-	-e DISPLAY -e TERM -e QT_X11_NO_MITSHM=1 -e XAUTHORITY="$tmp_docker" \
-	-v "$tmp_docker":"$tmp_docker" -v /tmp/.X11-unix:/tmp/.X11-unix \
-	-v /etc/localtime:/etc/localtime:ro \
-	"$@"
+    # Allow local root access to X server
+    xhost +local:root > /dev/null 2>&1
+
+    # Run the container with GUI support and any additional arguments
+    docker run -it --rm \
+        --gpus all \
+        --runtime=nvidia \
+        -e DISPLAY=$DISPLAY \
+        -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
+        --device /dev/dri \
+        --device /dev/nvidia0 \
+        --device /dev/nvidiactl \
+        --device /dev/nvidia-uvm \
+        --privileged \
+        "$@"
+
+    # Revoke X server access after container exit for security
+    xhost -local:root > /dev/null 2>&1
+}
+        # --network=host \
+
+gz_bridge(){
+	docker exec humble-gz /ros_entrypoint.sh ros2 run ros_gz_bridge parameter_bridge \
+	        "/world/default/dynamic_pose/info@geometry_msgs/msg/PoseArray[gz.msgs.Pose_V" \
+	        "/ouster/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked" \
+	        "/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock"
 }
 
+
 ola-qgc() {
-	docker run -it --privileged --gpus=all --runtime=nvidia --network host \
-	 --volume /home/ola/workspace/:/home/ola/workspace \
-	 qgc-launch \
 	 /home/ola/workspace/qgroundcontrol/build/staging/CustomQGroundControl
 }
 
@@ -137,4 +196,22 @@ alias cloud_viz='cloud_rviz'
 
 scout-clone() {
 	git clone git@github.com:scoutdi/"$@".git
+}
+
+compare_params() {
+  if [ "$#" -ne 2 ]; then
+    echo "Usage: compare_params file1.params file2.params"
+    return 1
+  fi
+
+  awk '
+  function abs(x) { return x < 0 ? -x : x }
+  NR==FNR { a[$3] = $4; next }
+  ($3 in a) {
+    diff = $4 - a[$3]
+    if (abs(diff) > 1e-5) {
+      printf "%s: %s -> %s\n", $3, a[$3], $4
+    }
+  }
+  ' "$1" "$2"
 }
