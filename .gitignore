@@ -1,5 +1,10 @@
 # Ignore list for the dotfiles bare repo (work tree is $HOME).
 # Machine-specific: each computer has its own.
 .p10k.zsh
+# Kept local for now. Custom additions go in .ola-zshrc.
+# .zshrc is still tracked, so this line does not hide its changes.
+.zshrc
+.zshenv
+.zprofile
 # Written by fc-cache.
 .fonts/**/.uuid

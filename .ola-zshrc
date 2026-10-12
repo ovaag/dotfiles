@@ -10,3 +10,6 @@ dtf () {
 export CMAKE_C_COMPILER_LAUNCHER=ccache
 export CMAKE_CXX_COMPILER_LAUNCHER=ccache
 export PATH="$HOME/.local/bin:$PATH"
+
+# Put ccache wrappers first, also ahead of toolchains that prepend their own compilers
+export PATH="/usr/lib/ccache:${PATH//\/usr\/lib\/ccache:/}"
