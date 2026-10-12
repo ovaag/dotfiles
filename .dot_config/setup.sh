@@ -20,7 +20,10 @@ dots () {
 
 dots checkout --force
 dots config --local status.showUntrackedFiles no
+# A bare clone has no fetch refspec, so add one to get origin/base for status.
+dots config --local remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
 dots fetch
+dots branch -u origin/base
 
 
 # Install fonts
