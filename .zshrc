@@ -23,3 +23,12 @@ unsetopt share_history
 source $HOME/.bash_aliases
 source $ZSH/oh-my-zsh.sh
 source $HOME/.ola-zshrc
+
+# Added by swiftly
+[[ -f "$HOME/.local/share/swiftly/env.sh" ]] && . "$HOME/.local/share/swiftly/env.sh"
+# Add scout-tools to PATH
+[[ "$PATH" != *"$HOME/.local/bin"* ]] && export PATH="$PATH:$HOME/.local/bin" || true
+# scout: shell integration (scout cd, completion)
+command -v scout >/dev/null && eval "$(scout shell-init zsh)"
+# Put ccache wrappers first, after swiftly prepends its clang
+export PATH="/usr/lib/ccache:${PATH//\/usr\/lib\/ccache:/}"

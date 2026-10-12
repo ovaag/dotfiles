@@ -1,0 +1,5 @@
+# Ignore list for the dotfiles bare repo (work tree is $HOME).
+# Machine-specific: each computer has its own.
+.p10k.zsh
+# Written by fc-cache.
+.fonts/**/.uuid

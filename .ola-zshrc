@@ -7,5 +7,6 @@ dtf () {
   git --git-dir="$HOME/.dotfiles" --work-tree="$HOME" "$@"
 }
 
-export PATH="/usr/lib/ccache:$PATH"
+export CMAKE_C_COMPILER_LAUNCHER=ccache
+export CMAKE_CXX_COMPILER_LAUNCHER=ccache
 export PATH="$HOME/.local/bin:$PATH"
