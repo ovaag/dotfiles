@@ -1,0 +1,31 @@
+[/]
+copy-on-select=true
+paste-strip-first-char=true
+paste-strip-trailing-whitespace=true
+terminal-title-style='none'
+
+[keybindings]
+session-add-down='F1'
+session-add-right='F2'
+session-switch-to-terminal-down='<Primary><Shift>Down'
+session-switch-to-terminal-left='<Primary><Shift>Left'
+session-switch-to-terminal-right='<Primary><Shift>Right'
+session-switch-to-terminal-up='<Primary><Shift>Up'
+terminal-scroll-down='disabled'
+terminal-scroll-up='disabled'
+
+[profiles/2b7c4080-0ddd-46c5-8f23-563fd3ba789d]
+background-color='#272822'
+background-transparency-percent=8
+badge-color-set=false
+bold-color-set=false
+cursor-colors-set=false
+font='MesloLGS NF 12'
+foreground-color='#F8F8F2'
+highlight-colors-set=false
+login-shell=true
+palette=['#272822', '#F92672', '#A6E22E', '#F4BF75', '#66D9EF', '#AE81FF', '#A1EFE4', '#F8F8F2', '#75715E', '#F92672', '#A6E22E', '#F4BF75', '#66D9EF', '#AE81FF', '#A1EFE4', '#F9F8F5']
+terminal-bell='none'
+use-system-font=false
+use-theme-colors=false
+visible-name='Default'

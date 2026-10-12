@@ -29,3 +29,9 @@ dots branch -u origin/base
 # Install fonts
 fc-cache -f -v
 
+# Tilix settings. Update the file with:
+#   dconf dump /com/gexperts/Tilix/ > ~/.dot_config/tilix.dconf
+if command -v tilix >/dev/null; then
+  dconf load /com/gexperts/Tilix/ < "$HOME/.dot_config/tilix.dconf"
+fi
+
